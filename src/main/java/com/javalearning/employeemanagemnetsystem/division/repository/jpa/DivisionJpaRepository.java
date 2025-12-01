@@ -1,4 +1,4 @@
-package com.javalearning.employeemanagemnetsystem.shared.data.repository.jpa;
+package com.javalearning.employeemanagemnetsystem.division.repository.jpa;
 
 import com.javalearning.employeemanagemnetsystem.shared.data.model.Division;
 import org.springframework.data.jpa.repository.JpaRepository;

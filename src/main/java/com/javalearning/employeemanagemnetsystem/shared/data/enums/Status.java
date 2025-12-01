@@ -32,4 +32,11 @@ public enum Status {
         ).toList();
     }
 
+    public static Status fromCode(int code){
+        return Arrays.stream(Status.values())
+                .filter(status -> status.getCode() == code)
+                .findFirst()
+                .orElse(null);
+    }
+
 }
