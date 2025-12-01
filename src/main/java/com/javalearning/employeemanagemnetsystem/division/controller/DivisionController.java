@@ -67,3 +67,4 @@ public class DivisionController {
                 return ResponseEntity.ok("Successfully deleted User with id number " + id);
     }
 }
+
