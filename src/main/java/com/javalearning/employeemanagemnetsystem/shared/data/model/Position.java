@@ -16,4 +16,8 @@ public class Position {
     private Long id;
 
     private String name;
+    private String code;
+
+    @Column(name="status_id")
+    private Integer statusId;
 }

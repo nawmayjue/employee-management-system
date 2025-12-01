@@ -1,6 +1,5 @@
 package com.javalearning.employeemanagemnetsystem.position.dto;
 
-
 import lombok.*;
 
 @Getter
@@ -8,9 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PositionResponse {
-    private Long id;
-    private String name;
-    private String code;
-
+public class UpdatePositionStatusRequest {
+    Integer statusId;
 }
