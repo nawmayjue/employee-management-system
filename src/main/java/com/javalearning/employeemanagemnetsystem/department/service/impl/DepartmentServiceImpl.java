@@ -4,6 +4,7 @@ import com.javalearning.employeemanagemnetsystem.department.dto.CreateDepartment
 import com.javalearning.employeemanagemnetsystem.department.dto.DepartmentResponse;
 import com.javalearning.employeemanagemnetsystem.department.repository.jpa.DepartmentJpaRepository;
 import com.javalearning.employeemanagemnetsystem.department.service.DepartmentService;
+import com.javalearning.employeemanagemnetsystem.division.dto.DivisionResponse;
 import com.javalearning.employeemanagemnetsystem.division.repository.jpa.DivisionJpaRepository;
 import com.javalearning.employeemanagemnetsystem.shared.data.model.Department;
 import com.javalearning.employeemanagemnetsystem.shared.data.model.Division;
@@ -29,6 +30,18 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .build();
 
         Department savedDepartment = departmentJpaRepository.save(department);
-        return null;
+
+        return DepartmentResponse.builder()
+                .id(savedDepartment.getId())
+                .name(savedDepartment.getName())
+                .code(savedDepartment.getCode())
+                .division(
+                        DivisionResponse.builder()
+                                .id(savedDepartment.getDivision().getId())
+                                .name(savedDepartment.getDivision().getName())
+                                .code(savedDepartment.getDivision().getCode())
+                                .build()
+                )
+                .build();
     }
 }
