@@ -2,6 +2,7 @@ package com.javalearning.employeemanagemnetsystem.department.service.impl;
 
 import com.javalearning.employeemanagemnetsystem.department.dto.CreateDepartmentRequest;
 import com.javalearning.employeemanagemnetsystem.department.dto.DepartmentResponse;
+import com.javalearning.employeemanagemnetsystem.department.repository.jdbc.DepartmentJdbcRepository;
 import com.javalearning.employeemanagemnetsystem.department.repository.jpa.DepartmentJpaRepository;
 import com.javalearning.employeemanagemnetsystem.department.service.DepartmentService;
 import com.javalearning.employeemanagemnetsystem.division.dto.DivisionResponse;
@@ -11,12 +12,15 @@ import com.javalearning.employeemanagemnetsystem.shared.data.model.Division;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentJpaRepository departmentJpaRepository;
     private final DivisionJpaRepository divisionJpaRepository;
+    private final DepartmentJdbcRepository departmentJdbcRepository;
 
     @Override
     public DepartmentResponse createDepartment(CreateDepartmentRequest departmentRequest) {
@@ -43,5 +47,10 @@ public class DepartmentServiceImpl implements DepartmentService {
                                 .build()
                 )
                 .build();
+    }
+
+    @Override
+    public List<DepartmentResponse> retrieveAll() {
+        return departmentJdbcRepository.findAll();
     }
 }

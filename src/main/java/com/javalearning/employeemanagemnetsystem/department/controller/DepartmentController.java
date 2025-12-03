@@ -8,6 +8,8 @@ import com.javalearning.employeemanagemnetsystem.shared.data.enums.Status;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/employees/departments")
 @AllArgsConstructor
@@ -26,5 +28,10 @@ public class DepartmentController {
             @RequestBody CreateDepartmentRequest createDepartmentRequest
             ){
         return departmentService.createDepartment(createDepartmentRequest);
+    }
+
+    @GetMapping
+    public List<DepartmentResponse> retrieveAllDepartment(){
+        return departmentService.retrieveAll();
     }
 }
