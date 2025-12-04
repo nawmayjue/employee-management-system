@@ -6,10 +6,13 @@ import com.javalearning.employeemanagemnetsystem.shared.data.model.Department;
 import com.javalearning.employeemanagemnetsystem.shared.data.model.Team;
 import com.javalearning.employeemanagemnetsystem.team.TeamResponse;
 import com.javalearning.employeemanagemnetsystem.team.dto.CreateTeamRequest;
+import com.javalearning.employeemanagemnetsystem.team.repository.jdbc.TeamJdbcRepository;
 import com.javalearning.employeemanagemnetsystem.team.repository.jpa.TeamJpaRepository;
 import com.javalearning.employeemanagemnetsystem.team.service.TeamService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -18,6 +21,7 @@ public class TeamServiceImpl implements TeamService {
     private final TeamJpaRepository teamJpaRepository;
     private final DepartmentJpaRepository departmentJpaRepository;
     private final DepartmentJdbcRepository departmentJdbcRepository;
+    private final TeamJdbcRepository teamJdbcRepository;
 
     @Override
     public TeamResponse createTeam(CreateTeamRequest teamRequest) {
@@ -41,5 +45,10 @@ public class TeamServiceImpl implements TeamService {
                             departmentJdbcRepository.findById(savedTeam.getDepartment().getId())
                     )
                     .build();
+    }
+
+    @Override
+    public List<TeamResponse> retrieveAllTeams() {
+        return teamJdbcRepository.findAll();
     }
 }

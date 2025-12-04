@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/employees/teams")
 @AllArgsConstructor
@@ -29,5 +31,10 @@ public class TeamController {
     ){
         TeamResponse teamResponse = teamService.createTeam(createTeamRequest);
         return ResponseEntity.ok().body(teamResponse);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TeamResponse>> retrieveAllTeams(){
+        return ResponseEntity.ok(teamService.retrieveAllTeams());
     }
 }
