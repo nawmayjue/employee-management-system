@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface TeamJdbcRepository {
     List<TeamResponse> findAll();
+    TeamResponse findById(Long id);
 }

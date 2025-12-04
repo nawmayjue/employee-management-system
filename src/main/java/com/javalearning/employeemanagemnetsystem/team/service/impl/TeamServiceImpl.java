@@ -51,4 +51,9 @@ public class TeamServiceImpl implements TeamService {
     public List<TeamResponse> retrieveAllTeams() {
         return teamJdbcRepository.findAll();
     }
+
+    @Override
+    public TeamResponse retrieveTeamById(Long id) {
+        return teamJdbcRepository.findById(id);
+    }
 }

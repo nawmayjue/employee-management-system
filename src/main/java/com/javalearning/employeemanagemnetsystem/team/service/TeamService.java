@@ -8,4 +8,5 @@ import java.util.List;
 public interface TeamService {
     TeamResponse createTeam(CreateTeamRequest teamRequest);
     List<TeamResponse> retrieveAllTeams();
+    TeamResponse retrieveTeamById(Long id);
 }
