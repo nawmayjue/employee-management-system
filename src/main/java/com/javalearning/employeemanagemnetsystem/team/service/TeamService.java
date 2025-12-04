@@ -9,4 +9,5 @@ public interface TeamService {
     TeamResponse createTeam(CreateTeamRequest teamRequest);
     List<TeamResponse> retrieveAllTeams();
     TeamResponse retrieveTeamById(Long id);
+    void deleteTeamById(Long id);
 }

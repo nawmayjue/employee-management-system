@@ -56,4 +56,12 @@ public class TeamServiceImpl implements TeamService {
     public TeamResponse retrieveTeamById(Long id) {
         return teamJdbcRepository.findById(id);
     }
+
+    @Override
+    public void deleteTeamById(Long id) {
+        if (!teamJpaRepository.existsById(id)){
+            throw new RuntimeException("Team with id: " + id + " does not exist");
+        }
+        teamJpaRepository.deleteById(id);
+    }
 }
