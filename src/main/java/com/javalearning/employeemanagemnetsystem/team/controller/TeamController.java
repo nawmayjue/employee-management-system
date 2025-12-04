@@ -4,6 +4,7 @@ import com.javalearning.employeemanagemnetsystem.team.TeamResponse;
 import com.javalearning.employeemanagemnetsystem.team.dto.CreateTeamRequest;
 import com.javalearning.employeemanagemnetsystem.team.dto.TeamTemplateResponse;
 import com.javalearning.employeemanagemnetsystem.shared.data.enums.Status;
+import com.javalearning.employeemanagemnetsystem.team.dto.UpdateTeamRequest;
 import com.javalearning.employeemanagemnetsystem.team.service.TeamService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -55,5 +56,14 @@ public class TeamController {
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TeamResponse> updateTeamById(
+            @PathVariable Long id,
+            @RequestBody UpdateTeamRequest updateTeamRequest
+    ){
+        TeamResponse teamResponse = teamService.updateTeamById(id, updateTeamRequest);
+        return ResponseEntity.ok().body(teamResponse);
     }
 }
