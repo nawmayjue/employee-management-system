@@ -1,5 +1,6 @@
 package com.javalearning.employeemanagemnetsystem.division.service.impl;
 
+import com.javalearning.employeemanagemnetsystem.department.repository.jpa.DepartmentJpaRepository;
 import com.javalearning.employeemanagemnetsystem.division.dto.*;
 import com.javalearning.employeemanagemnetsystem.shared.data.enums.Status;
 import com.javalearning.employeemanagemnetsystem.shared.data.model.Division;
@@ -17,6 +18,7 @@ public class DivisionServiceImpl implements DivisionService {
 
     private final DivisionJpaRepository divisionJpaRepository;
     private final DivisionJdbcRepository divisionJdbcRepository;
+    private final DepartmentJpaRepository departmentJpaRepository;
 
     @Override
     public DivisionResponse createDivision(CreateDivisionRequest divisionRequest) {
@@ -72,6 +74,9 @@ public class DivisionServiceImpl implements DivisionService {
 
     @Override
     public void deleteDivisionById(Long id) {
+        if (departmentJpaRepository.existsByDivisionId(id)){
+            throw new RuntimeException("Cannot delete division with id: " + id + " as it is associated with departments");
+        }
         if(divisionJpaRepository.existsById(id)){
             divisionJpaRepository.deleteById(id);
         }

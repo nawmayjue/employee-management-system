@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DepartmentJpaRepository extends JpaRepository<Department, Long> {
+    boolean existsByDivisionId(Long id);
 }

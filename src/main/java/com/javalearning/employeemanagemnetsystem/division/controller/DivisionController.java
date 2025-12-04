@@ -69,8 +69,12 @@ public class DivisionController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDivisionById(
             @PathVariable Long id) {
-        divisionService.deleteDivisionById(id);
-                return ResponseEntity.ok("Successfully deleted User with id number " + id);
+        try {
+            divisionService.deleteDivisionById(id);
+            return ResponseEntity.ok("Successfully deleted User with id number " + id);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
 
