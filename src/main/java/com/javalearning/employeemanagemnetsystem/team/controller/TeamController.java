@@ -1,14 +1,20 @@
 package com.javalearning.employeemanagemnetsystem.team.controller;
 
+import com.javalearning.employeemanagemnetsystem.team.TeamResponse;
+import com.javalearning.employeemanagemnetsystem.team.dto.CreateTeamRequest;
 import com.javalearning.employeemanagemnetsystem.team.dto.TeamTemplateResponse;
 import com.javalearning.employeemanagemnetsystem.shared.data.enums.Status;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.javalearning.employeemanagemnetsystem.team.service.TeamService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/employees/teams")
+@AllArgsConstructor
 public class TeamController {
+
+    private final TeamService teamService;
 
     @GetMapping("/template")
     public TeamTemplateResponse getTeamTemplate(){
@@ -17,5 +23,11 @@ public class TeamController {
         );
     }
 
-
+    @PostMapping
+    public ResponseEntity<TeamResponse> createTeam(
+            @RequestBody CreateTeamRequest createTeamRequest
+    ){
+        TeamResponse teamResponse = teamService.createTeam(createTeamRequest);
+        return ResponseEntity.ok().body(teamResponse);
+    }
 }
