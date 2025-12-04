@@ -45,19 +45,13 @@ public class DivisionJdbcRepositoryImpl implements DivisionJdbcRepository {
     }
 
     @Override
-    public DivisionResponse updateStatus(Long id, String code) {
-
-        int rows = jdbcTemplate.update(
+    public void updateStatus(Long id, Integer statusId) {
+        this.jdbcTemplate.update(
                 UPDATE_STATUS_QUERY,
-                code,  // usually status first, depending on SQL
+                statusId,  // usually status first, depending on SQL
                 id
         );
 
-        return jdbcTemplate.queryForObject(
-                FIND_BY_ID_QUERY,
-                DIVISION_ROW_MAPPER,
-                id
-        );
     }
 
 }

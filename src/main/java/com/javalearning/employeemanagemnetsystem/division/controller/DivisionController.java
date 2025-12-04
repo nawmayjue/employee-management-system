@@ -53,11 +53,17 @@ public class DivisionController {
     }
 
     @PatchMapping("/{id}/status")
-    public DivisionResponse updateDivisionStatus(
+    public ResponseEntity<?> updateDivisionStatus(
             @PathVariable Long id,
             @RequestBody UpdateDivisionStatusRequest updateDivisionRequest
     ){
-        return divisionService.updateDivisionStatusById(id, updateDivisionRequest);
+        divisionService.updateDivisionStatusById(id, updateDivisionRequest);
+        return ResponseEntity.ok(
+                UpdateDivisionStatusResponse.builder()
+                        .statusId(updateDivisionRequest.getStatusId())
+                        .statusInfo(String.valueOf(Status.fromCode(updateDivisionRequest.getStatusId())))
+                        .build()
+        );
     }
 
     @DeleteMapping("/{id}")

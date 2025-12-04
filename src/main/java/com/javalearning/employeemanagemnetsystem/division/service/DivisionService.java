@@ -8,10 +8,10 @@ import com.javalearning.employeemanagemnetsystem.division.dto.UpdateDivisionStat
 import java.util.List;
 
 public interface DivisionService {
-    public DivisionResponse createDivision(CreateDivisionRequest divisionRequest);
+    DivisionResponse createDivision(CreateDivisionRequest divisionRequest);
     List<DivisionResponse> retrieveAllDivision();
-    public DivisionResponse retrieveById(Long id);
-    public DivisionResponse updateById(Long id, UpdateDivisionRequest updateDivisionRequest);
-    public DivisionResponse updateDivisionStatusById(Long id, UpdateDivisionStatusRequest divisionRequest);
+    DivisionResponse retrieveById(Long id);
+    DivisionResponse updateById(Long id, UpdateDivisionRequest updateDivisionRequest);
+    void updateDivisionStatusById(Long id, UpdateDivisionStatusRequest divisionRequest);
     void deleteDivisionById(Long id);
 }

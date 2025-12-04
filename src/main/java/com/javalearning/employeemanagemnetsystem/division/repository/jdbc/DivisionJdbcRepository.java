@@ -8,6 +8,6 @@ import java.util.List;
 public interface DivisionJdbcRepository {
     List<DivisionResponse> findAll();
     public DivisionResponse findById(Long id);
-    public DivisionResponse updateStatus(Long id, String code);
+    void updateStatus(Long id, Integer statusId);
 
 }
