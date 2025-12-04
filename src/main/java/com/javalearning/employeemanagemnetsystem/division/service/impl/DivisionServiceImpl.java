@@ -1,9 +1,7 @@
 package com.javalearning.employeemanagemnetsystem.division.service.impl;
 
-import com.javalearning.employeemanagemnetsystem.division.dto.CreateDivisionRequest;
-import com.javalearning.employeemanagemnetsystem.division.dto.DivisionResponse;
-import com.javalearning.employeemanagemnetsystem.division.dto.UpdateDivisionRequest;
-import com.javalearning.employeemanagemnetsystem.division.dto.UpdateDivisionStatusRequest;
+import com.javalearning.employeemanagemnetsystem.department.repository.jpa.DepartmentJpaRepository;
+import com.javalearning.employeemanagemnetsystem.division.dto.*;
 import com.javalearning.employeemanagemnetsystem.shared.data.enums.Status;
 import com.javalearning.employeemanagemnetsystem.shared.data.model.Division;
 import com.javalearning.employeemanagemnetsystem.division.repository.jdbc.DivisionJdbcRepository;
@@ -20,6 +18,7 @@ public class DivisionServiceImpl implements DivisionService {
 
     private final DivisionJpaRepository divisionJpaRepository;
     private final DivisionJdbcRepository divisionJdbcRepository;
+    private final DepartmentJpaRepository departmentJpaRepository;
 
     @Override
     public DivisionResponse createDivision(CreateDivisionRequest divisionRequest) {
@@ -67,21 +66,17 @@ public class DivisionServiceImpl implements DivisionService {
     }
 
     @Override
-    public DivisionResponse updateDivisionStatusById(Long id, UpdateDivisionStatusRequest divisionRequest) {
-        DivisionResponse division = divisionJdbcRepository.findById(id);
-
-        String code = Integer.toString(divisionRequest.getStatusId());
-        divisionJdbcRepository.updateStatus(id, code);
-        String info = String.valueOf(Status.fromCode(divisionRequest.getStatusId()));;
-        return DivisionResponse.builder()
-                .id(division.getId())
-                .name(division.getName())
-                .code(info)
-                .build();
+    public void updateDivisionStatusById(Long id, UpdateDivisionStatusRequest divisionRequest) {
+            DivisionResponse division = divisionJdbcRepository.findById(id);
+            divisionJdbcRepository.updateStatus(division.getId(), divisionRequest.getStatusId());
     }
+
 
     @Override
     public void deleteDivisionById(Long id) {
+        if (departmentJpaRepository.existsByDivisionId(id)){
+            throw new RuntimeException("Cannot delete division with id: " + id + " as it is associated with departments");
+        }
         if(divisionJpaRepository.existsById(id)){
             divisionJpaRepository.deleteById(id);
         }
