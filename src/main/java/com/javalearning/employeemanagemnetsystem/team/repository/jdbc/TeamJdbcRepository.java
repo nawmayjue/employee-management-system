@@ -9,4 +9,5 @@ import java.util.List;
 public interface TeamJdbcRepository {
     List<TeamResponse> findAll();
     TeamResponse findById(Long id);
+    void updateStatus(Long id, Integer statusId);
 }

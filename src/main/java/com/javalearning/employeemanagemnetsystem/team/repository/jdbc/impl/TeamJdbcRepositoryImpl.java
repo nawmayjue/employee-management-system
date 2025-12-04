@@ -49,6 +49,10 @@ public class TeamJdbcRepositoryImpl implements TeamJdbcRepository {
         WHERE t.id=?
     """;
 
+    private static final String UPDATE_STATUS_QUERY = """
+        UPDATE team SET status_id = ? WHERE id = ?
+    """;
+
     @Override
     public List<TeamResponse> findAll() {
         return jdbcTemplate.query(
@@ -62,6 +66,15 @@ public class TeamJdbcRepositoryImpl implements TeamJdbcRepository {
         return jdbcTemplate.queryForObject(
                 FIND_BY_ID_QUERY,
                 TEAM_ROW_MAPPER,
+                id
+        );
+    }
+
+    @Override
+    public void updateStatus(Long id, Integer statusId) {
+        this.jdbcTemplate.update(
+                UPDATE_STATUS_QUERY,
+                statusId,
                 id
         );
     }

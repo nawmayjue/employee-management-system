@@ -1,10 +1,8 @@
 package com.javalearning.employeemanagemnetsystem.team.controller;
 
 import com.javalearning.employeemanagemnetsystem.team.TeamResponse;
-import com.javalearning.employeemanagemnetsystem.team.dto.CreateTeamRequest;
-import com.javalearning.employeemanagemnetsystem.team.dto.TeamTemplateResponse;
+import com.javalearning.employeemanagemnetsystem.team.dto.*;
 import com.javalearning.employeemanagemnetsystem.shared.data.enums.Status;
-import com.javalearning.employeemanagemnetsystem.team.dto.UpdateTeamRequest;
 import com.javalearning.employeemanagemnetsystem.team.service.TeamService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -65,5 +63,22 @@ public class TeamController {
     ){
         TeamResponse teamResponse = teamService.updateTeamById(id, updateTeamRequest);
         return ResponseEntity.ok().body(teamResponse);
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<?> updateTeamStatus(
+            @PathVariable Long id,
+            @RequestBody UpdateTeamStatusRequest updateTeamStatusRequest
+    ){
+        try {
+            teamService.updateTeamStatusById(id, updateTeamStatusRequest);
+            return ResponseEntity.ok(
+                    UpdateTeamStatusResponse.builder()
+                            .statusId(updateTeamStatusRequest.getStatusId())
+                            .statusInfo(String.valueOf(Status.fromCode(updateTeamStatusRequest.getStatusId())))
+            );
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

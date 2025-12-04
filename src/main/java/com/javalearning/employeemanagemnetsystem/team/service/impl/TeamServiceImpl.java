@@ -7,6 +7,7 @@ import com.javalearning.employeemanagemnetsystem.shared.data.model.Team;
 import com.javalearning.employeemanagemnetsystem.team.TeamResponse;
 import com.javalearning.employeemanagemnetsystem.team.dto.CreateTeamRequest;
 import com.javalearning.employeemanagemnetsystem.team.dto.UpdateTeamRequest;
+import com.javalearning.employeemanagemnetsystem.team.dto.UpdateTeamStatusRequest;
 import com.javalearning.employeemanagemnetsystem.team.repository.jdbc.TeamJdbcRepository;
 import com.javalearning.employeemanagemnetsystem.team.repository.jpa.TeamJpaRepository;
 import com.javalearning.employeemanagemnetsystem.team.service.TeamService;
@@ -95,5 +96,13 @@ public class TeamServiceImpl implements TeamService {
                         departmentJdbcRepository.findById(updatedTeam.getDepartment().getId())
                 )
                 .build();
+    }
+
+    @Override
+    public void updateTeamStatusById(Long id, UpdateTeamStatusRequest updateTeamStatusRequest) {
+        if (!teamJpaRepository.existsById(id)){
+            throw new RuntimeException("Team with id: " + id + " does not exist");
+        }
+        teamJdbcRepository.updateStatus(id, updateTeamStatusRequest.getStatusId());
     }
 }
