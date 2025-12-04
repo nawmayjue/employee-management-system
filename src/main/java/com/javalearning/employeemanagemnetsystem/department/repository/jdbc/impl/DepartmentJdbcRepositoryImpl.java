@@ -16,7 +16,7 @@ public class DepartmentJdbcRepositoryImpl implements DepartmentJdbcRepository {
     private static final DepartmentRowMapper DEPARTMENT_ROW_MAPPER = new DepartmentRowMapper();
     private final JdbcTemplate jdbcTemplate;
 
-    private static final String FIND_BY_ALL_QUERY= """
+    private static final String FIND_ALL_QUERY= """
             SELECT dept.id AS departmentId,
             dept.name AS departmentName,
             dept.code AS departmentCode,
@@ -27,11 +27,48 @@ public class DepartmentJdbcRepositoryImpl implements DepartmentJdbcRepository {
             JOIN division division ON division.id=dept.division_id
             """;
 
+    private static final String FIND_BY_ID_QUERY = """
+            SELECT dept.id AS departmentId,
+            dept.name AS departmentName,
+            dept.code AS departmentCode,
+            division.id AS divisionId,
+            division.name AS divisionName,
+            division.code AS divisionCode
+            FROM department dept
+            JOIN division division ON division.id=dept.division_id
+            WHERE dept.id=?
+            """;
+
+    private static final String UPDATE_STATUS_QUERY = """
+            UPDATE department SET status_id = ? WHERE id = ?
+            """;
+
     @Override
     public List<DepartmentResponse> findAll() {
         return this.jdbcTemplate.query(
-                FIND_BY_ALL_QUERY,
+                FIND_ALL_QUERY,
                 DEPARTMENT_ROW_MAPPER
         );
     }
+
+    @Override
+    public DepartmentResponse findById(Long id) {
+        return this.jdbcTemplate.queryForObject(
+                FIND_BY_ID_QUERY,
+                DEPARTMENT_ROW_MAPPER,
+                id
+        );
+    }
+
+    @Override
+    public void updateDepartmentStatus(Long id, Integer statusId) {
+        this.jdbcTemplate.update(
+                UPDATE_STATUS_QUERY,
+                statusId,
+                id
+        );
+
+    }
+
+
 }

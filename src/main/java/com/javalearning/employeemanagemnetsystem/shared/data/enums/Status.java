@@ -6,7 +6,7 @@ import java.util.List;
 public enum Status {
     INVALID (0, "Invalid"),
     ACTIVE (1, "Active"),
-    INACTIVE (3, "Inactive");
+    INACTIVE (2, "Inactive");
 
     private final Integer code;
     private final String description;
