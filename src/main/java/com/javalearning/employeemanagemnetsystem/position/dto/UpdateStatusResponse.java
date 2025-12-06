@@ -2,12 +2,13 @@ package com.javalearning.employeemanagemnetsystem.position.dto;
 
 import lombok.*;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 @Builder
-public class CreatePositionRequest {
-    private String name;
-    private String code;
+public class UpdateStatusResponse {
+    private Integer statusId;
+    private String statusInfo;
+
 }
