@@ -16,11 +16,11 @@ public class PositionJdbcRepositoryImpl implements PositionJdbcRepository {
     private final JdbcTemplate jdbcTemplate;
 
     private static final String FIND_BY_ID_QUERY= """
-            SELECT id, name, code FROM positions WHERE id=?
+            SELECT id, name, code FROM position WHERE id=?
             """;
 
     private static final String FIND_ALL_QUERY = """
-            SELECT id, name, code FROM positions
+            SELECT id, name, code FROM position
             """;
 
     @Override
