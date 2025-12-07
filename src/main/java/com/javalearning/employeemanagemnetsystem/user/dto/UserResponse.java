@@ -19,4 +19,8 @@ public class UserResponse {
     private PositionResponse position;
     private TeamResponse team;
 
+    public UserResponse(Long id, String username) {
+        this.id = id;
+        this.username = username;
+    }
 }

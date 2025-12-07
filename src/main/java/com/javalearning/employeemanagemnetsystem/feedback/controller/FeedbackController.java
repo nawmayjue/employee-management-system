@@ -1,14 +1,12 @@
 package com.javalearning.employeemanagemnetsystem.feedback.controller;
 
+import com.javalearning.employeemanagemnetsystem.feedback.dto.CreateFeedbackRequest;
 import com.javalearning.employeemanagemnetsystem.feedback.dto.FeedbackResponse;
 import com.javalearning.employeemanagemnetsystem.feedback.dto.FeedbackTemplateResponse;
 import com.javalearning.employeemanagemnetsystem.feedback.service.FeedbackService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,21 +23,29 @@ public class FeedbackController {
     }
 
     @PostMapping
-    public ResponseEntity<FeedbackResponse> createFeedback(
-            // Request Body
-    ){
-        return ResponseEntity.ok().body(null);
+    public ResponseEntity<?> createFeedback(
+            @RequestBody CreateFeedbackRequest createFeedbackRequest
+            ){
+        try {
+            return ResponseEntity.ok().body(feedbackService.createFeedback(createFeedbackRequest));
+        }catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FeedbackResponse> retrieveFeedbackById(
-            // something
+    public ResponseEntity<?> retrieveFeedbackById(
+            @PathVariable Long id
     ){
-        return ResponseEntity.ok().body(null);
+        try {
+            return ResponseEntity.ok().body(feedbackService.retrieveById(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping
     public ResponseEntity<List<FeedbackResponse>> retrieveAllFeedback(){
-        return ResponseEntity.ok().body(null);
+        return ResponseEntity.ok().body(feedbackService.retrieveAll());
     }
 }
