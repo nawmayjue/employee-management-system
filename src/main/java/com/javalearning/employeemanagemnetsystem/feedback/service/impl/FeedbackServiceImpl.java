@@ -6,6 +6,7 @@ import com.javalearning.employeemanagemnetsystem.feedback.dto.FeedbackTemplateRe
 import com.javalearning.employeemanagemnetsystem.feedback.repository.jdbc.FeedbackJdbcRepository;
 import com.javalearning.employeemanagemnetsystem.feedback.repository.jpa.FeedbackJpaRepository;
 import com.javalearning.employeemanagemnetsystem.feedback.service.FeedbackService;
+import com.javalearning.employeemanagemnetsystem.mail.MailService;
 import com.javalearning.employeemanagemnetsystem.shared.data.model.Feedback;
 import com.javalearning.employeemanagemnetsystem.shared.data.model.User;
 import com.javalearning.employeemanagemnetsystem.user.repository.jdbc.UserJdbcRepository;
@@ -23,6 +24,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     private final FeedbackJdbcRepository feedbackJdbcRepository;
     private final FeedbackJpaRepository feedbackJpaRepository;
     private final UserJpaRepository userJpaRepository;
+    private final MailService mailService;
 
     @Override
     public FeedbackTemplateResponse retrieveFeedbackTemplate() {
@@ -73,6 +75,9 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .build();
 
         Feedback savedFeedback = feedbackJpaRepository.save(feedback);
+
+        mailService.sendFeedbackMail(fromUser.getEmail(), toUser.getEmail(), savedFeedback.getMessage());
+
         return FeedbackResponse.builder()
                 .id(savedFeedback.getId())
                 .message(savedFeedback.getMessage())
